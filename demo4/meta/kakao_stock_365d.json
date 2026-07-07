@@ -1,0 +1,4 @@
+{
+  "target": "035720",
+  "error": "HTTPSConnectionPool(host='api.finance.naver.com', port=443): Max retries exceeded with url: /siseJson.naver?symbol=035720&requestType=1&startTime=20250707&endTime=20260707&timeframe=day (Caused by NameResolutionError(\"HTTPSConnection(host='api.finance.naver.com', port=443): Failed to resolve 'api.finance.naver.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+}

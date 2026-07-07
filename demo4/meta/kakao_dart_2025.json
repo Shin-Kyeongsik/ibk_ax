@@ -1,0 +1,4 @@
+{
+  "query": "카카오",
+  "error": "HTTPSConnectionPool(host='opendart.fss.or.kr', port=443): Max retries exceeded with url: /api/company.json?crtfc_key=de5585dc0c3dc5eaf00ce8d5e1d4f422d03bae44&corp_code=00258801 (Caused by NameResolutionError(\"HTTPSConnection(host='opendart.fss.or.kr', port=443): Failed to resolve 'opendart.fss.or.kr' ([Errno 8] nodename nor servname provided, or not known)\"))"
+}

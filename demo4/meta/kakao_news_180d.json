@@ -1,0 +1,4 @@
+{
+  "query": "카카오",
+  "error": "HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=%EC%B9%B4%EC%B9%B4%EC%98%A4+when%3A180d&hl=ko&gl=KR&ceid=KR%3Ako (Caused by NameResolutionError(\"HTTPSConnection(host='news.google.com', port=443): Failed to resolve 'news.google.com' ([Errno 8] nodename nor servname provided, or not known)\"))"
+}

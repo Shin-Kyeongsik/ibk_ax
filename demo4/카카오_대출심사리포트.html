@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대출심사 리포트 - (주)카카오</title>
+<style>
+:root { --ibk:#00457c; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --bg:#f6f7f9; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,'Malgun Gothic',sans-serif; color:var(--ink);
+  background:var(--bg); line-height:1.6; }
+.wrap { max-width:860px; margin:0 auto; padding:32px 20px 64px; }
+header.top { background:var(--ibk); color:#fff; border-radius:14px; padding:24px 28px;
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+header.top h1 { margin:0; font-size:24px; }
+header.top .sub { opacity:.85; font-size:13px; margin-top:4px; }
+section { background:#fff; border:1px solid var(--line); border-radius:14px;
+  padding:22px 24px; margin-top:18px; }
+h2 { font-size:18px; margin:0 0 14px; }
+.sec-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.sec-head h2 { margin:0; }
+.badge { color:#fff; font-size:13px; font-weight:600; padding:4px 12px; border-radius:999px;
+  white-space:nowrap; }
+.kv-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px 24px; }
+.kv { display:flex; justify-content:space-between; border-bottom:1px dashed var(--line);
+  padding:6px 0; }
+.kv .k { color:var(--muted); }
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px; margin:14px 0; }
+.metric { background:var(--bg); border-radius:10px; padding:14px; text-align:center; }
+.metric .mv { font-size:20px; font-weight:700; }
+.metric .ml { font-size:12px; color:var(--muted); margin-top:4px; }
+table.acc { width:100%; border-collapse:collapse; margin-top:8px; font-size:14px; }
+table.acc th, table.acc td { padding:8px 10px; border-bottom:1px solid var(--line);
+  text-align:left; }
+.num { text-align:right; font-variant-numeric:tabular-nums; }
+.risks { list-style:none; padding:0; margin:8px 0 0; }
+.risk { display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);
+  align-items:flex-start; }
+.risk-title { font-weight:600; }
+.risk-sum { font-size:13px; color:#374151; margin-top:4px; }
+.chart { width:100%; height:auto; }
+.chart .axis { font-size:11px; fill:var(--muted); }
+.chart .lastlbl { font-size:12px; font-weight:700; }
+.muted { color:var(--muted); font-size:13px; margin:6px 0; }
+.comment { background:#f0f6fb; border-left:3px solid var(--ibk); padding:10px 14px;
+  border-radius:6px; margin-top:14px; font-size:14px; }
+.overall { border:2px solid var(--ibk); }
+.disclaimer { color:var(--muted); font-size:12px; margin-top:14px; }
+footer { text-align:center; color:var(--muted); font-size:12px; margin-top:24px; }
+@media(max-width:600px){ .kv-grid{grid-template-columns:1fr;} }
+</style></head>
+<body><div class="wrap">
+<header class="top">
+  <div><h1>(주)카카오 대출심사 정보 요약</h1>
+  <div class="sub">생성 2026-07-07 19:49 · 공개 데이터 기반 여신심사 보조 리포트</div></div>
+  <span class="badge" style="background:#c47f17">신용리스크: 보통</span>
+</header>
+<section><h2>기업 개요</h2><div class="kv-grid"><div class="kv"><span class="k">대표자</span><span class="v">정신아</span></div><div class="kv"><span class="k">업종</span><span class="v">63120</span></div><div class="kv"><span class="k">설립일</span><span class="v">1995-02-16</span></div><div class="kv"><span class="k">상장구분</span><span class="v">상장</span></div><div class="kv"><span class="k">사업자번호</span><span class="v">1208147521</span></div><div class="kv"><span class="k">주소</span><span class="v">제주특별자치도 제주시 첨단로 242</span></div></div></section>
+<section>
+  <div class="sec-head"><h2>재무 건전성</h2><span class="badge" style="background:#1a7f4b">양호</span></div>
+  <p class="muted">2025 사업연도 · 연결 재무제표</p>
+  <div class="metrics"><div class="metric"><div class="mv">82.49%</div><div class="ml">부채비율(%)</div></div><div class="metric"><div class="mv">140.94%</div><div class="ml">유동비율(%)</div></div><div class="metric"><div class="mv">54.8%</div><div class="ml">자기자본비율(%)</div></div><div class="metric"><div class="mv">9.04%</div><div class="ml">영업이익률(%)</div></div><div class="metric"><div class="mv">6.4%</div><div class="ml">순이익률(%)</div></div></div>
+  <table class="acc"><thead><tr><th>주요 계정</th><th class="num">금액</th></tr></thead><tbody><tr><td>자산총계</td><td class='num'>27.78조원</td></tr><tr><td>부채총계</td><td class='num'>12.56조원</td></tr><tr><td>자본총계</td><td class='num'>15.22조원</td></tr><tr><td>유동자산</td><td class='num'>12.37조원</td></tr><tr><td>유동부채</td><td class='num'>8.78조원</td></tr><tr><td>매출액</td><td class='num'>8.10조원</td></tr><tr><td>영업이익</td><td class='num'>7320.4억원</td></tr><tr><td>당기순이익</td><td class='num'>5179.6억원</td></tr></tbody></table>
+  <p class="comment">2025년 연결 기준 부채비율 82.49%, 유동비율 140.94%, 자기자본비율 54.8%로 여신 관점의 기본 재무 안정성은 양호합니다. 영업이익률 9.04%, 순이익률 6.4%로 수익성도 흑자를 유지하고 있어 재무 자체의 즉시 경고 신호는 제한적입니다.</p>
+</section>
+<section>
+  <div class="sec-head"><h2>평판·뉴스 리스크</h2><span class="badge" style="background:#c47f17">보통</span></div>
+  <p class="muted">검토 기간 최근 180일 · 기사 30건 검토</p>
+  <ul class="risks"><li class="risk">
+  <span class="badge" style="background:#c47f17">경영/사업</span>
+  <div class="risk-body"><div class="risk-title">[단독]창사 첫 파업 속 카카오 조직개편…비즈니스 전현수·톡부문 공석 - 머니투데이</div>
+  <div class="muted">머니투데이 · 2026-06-12</div>
+  <div class="risk-sum">성과급 갈등과 노사 교섭 결렬로 창사 첫 파업 또는 부분파업이 보도되어 단기 운영 안정성과 평판 측면의 모니터링이 필요합니다.</div>
+  </div></li><li class="risk">
+  <span class="badge" style="background:#c47f17">경영/사업</span>
+  <div class="risk-body"><div class="risk-title">카카오 노조 창사 첫 파업…성과급 갈등 플랫폼 업계로 번지나</div>
+  <div class="muted">인베스트조선 · 2026-06-11</div>
+  <div class="risk-sum">성과급 갈등과 노사 교섭 결렬로 창사 첫 파업 또는 부분파업이 보도되어 단기 운영 안정성과 평판 측면의 모니터링이 필요합니다.</div>
+  </div></li><li class="risk">
+  <span class="badge" style="background:#c47f17">경영/사업</span>
+  <div class="risk-body"><div class="risk-title">카카오 창사 20년 만에 첫 파업…카카오 &quot;이용자 불편 없게 대응&quot;</div>
+  <div class="muted">주간조선 · 2026-06-09</div>
+  <div class="risk-sum">성과급 갈등과 노사 교섭 결렬로 창사 첫 파업 또는 부분파업이 보도되어 단기 운영 안정성과 평판 측면의 모니터링이 필요합니다.</div>
+  </div></li><li class="risk">
+  <span class="badge" style="background:#c47f17">경영/사업</span>
+  <div class="risk-body"><div class="risk-title">카카오 창사 첫 파업…IT업계 보상체계 흔드나</div>
+  <div class="muted">매일경제 마켓 · 2026-06-10</div>
+  <div class="risk-sum">성과급 갈등과 노사 교섭 결렬로 창사 첫 파업 또는 부분파업이 보도되어 단기 운영 안정성과 평판 측면의 모니터링이 필요합니다.</div>
+  </div></li></ul><p class="comment">최근 180일 수집 기사 30건 중 리스크 태깅 기사는 15건이며, 핵심 신호는 파업 및 노사 갈등 관련 반복 보도입니다. 부도, 회생, 횡령, 분식회계 등 중대 신용 사건은 수집 기사에서 확인되지 않았지만, 핵심 서비스 운영과 대외 평판에 대한 단기 모니터링이 필요합니다.</p>
+</section>
+<section>
+  <div class="sec-head"><h2>주가 동향</h2><span class="badge" style="background:#c47f17">보통</span></div>
+  <p class="muted">종목코드 035720 · 최근 365일</p>
+  <svg viewBox="0 0 680 190" class="chart" role="img">
+  <polyline points="12,164.0 12.0,56.4 14.4,53.6 16.8,54.8 19.2,53.6 21.6,56.8 24.0,63.5 26.4,67.9 28.8,72.3 31.1,66.7 33.5,69.1 35.9,69.1 38.3,70.7 40.7,76.7 43.1,80.3 45.5,73.5 47.9,73.1 50.3,72.7 52.7,71.5 55.1,64.7 57.5,74.7 59.9,75.1 62.3,77.9 64.7,69.5 67.0,42.4 69.4,41.6 71.8,40.0 74.2,42.0 76.6,42.8 79.0,39.2 81.4,36.8 83.8,36.0 86.2,35.6 88.6,40.8 91.0,42.4 93.4,38.0 95.8,36.8 98.2,40.4 100.6,42.8 103.0,46.8 105.3,52.0 107.7,59.6 110.1,61.1 112.5,62.7 114.9,62.7 117.3,60.0 119.7,58.4 122.1,57.2 124.5,57.2 126.9,34.8 129.3,40.8 131.7,45.2 134.1,46.8 136.5,38.0 138.9,28.8 141.2,31.2 143.6,43.6 146.0,45.6 148.4,44.0 150.8,59.6 153.2,55.6 155.6,58.4 158.0,56.8 160.4,58.4 162.8,48.4 165.2,57.6 167.6,58.4 170.0,60.0 172.4,62.3 174.8,64.7 177.1,61.5 179.5,47.6 181.9,53.2 184.3,60.7 186.7,60.0 189.1,53.2 191.5,42.0 193.9,26.0 196.3,42.8 198.7,36.4 201.1,38.8 203.5,40.0 205.9,46.0 208.3,54.0 210.7,45.6 213.0,47.6 215.4,40.4 217.8,41.6 220.2,42.0 222.6,51.2 225.0,54.0 227.4,66.7 229.8,63.9 232.2,60.4 234.6,61.9 237.0,61.5 239.4,64.7 241.8,52.8 244.2,58.0 246.6,61.9 249.0,58.8 251.3,58.8 253.7,54.4 256.1,56.0 258.5,50.8 260.9,48.8 263.3,53.6 265.7,60.0 268.1,60.0 270.5,57.6 272.9,58.4 275.3,65.1 277.7,68.7 280.1,68.3 282.5,63.9 284.9,61.9 287.2,60.7 289.6,57.6 292.0,64.3 294.4,52.0 296.8,56.4 299.2,48.4 301.6,45.6 304.0,41.6 306.4,59.6 308.8,65.5 311.2,63.9 313.6,63.9 316.0,59.6 318.4,61.5 320.8,62.7 323.1,67.5 325.5,70.3 327.9,60.7 330.3,67.5 332.7,63.1 335.1,52.8 337.5,49.6 339.9,48.0 342.3,49.6 344.7,49.6 347.1,51.2 349.5,63.1 351.9,60.0 354.3,62.7 356.7,63.9 359.0,71.9 361.4,66.7 363.8,63.5 366.2,61.1 368.6,61.5 371.0,67.1 373.4,66.3 375.8,65.1 378.2,64.3 380.6,65.1 383.0,67.1 385.4,51.2 387.8,47.6 390.2,71.9 392.6,108.5 395.0,91.9 397.3,82.3 399.7,95.1 402.1,89.5 404.5,93.1 406.9,95.1 409.3,94.3 411.7,95.9 414.1,91.5 416.5,90.7 418.9,96.7 421.3,96.7 423.7,109.1 426.1,103.9 428.5,100.5 430.9,102.1 433.2,101.5 435.6,108.3 438.0,113.5 440.4,103.7 442.8,115.1 445.2,115.9 447.6,117.3 450.0,111.1 452.4,105.3 454.8,107.5 457.2,105.9 459.6,108.7 462.0,104.3 464.4,98.3 466.8,94.3 469.1,96.7 471.5,101.3 473.9,100.9 476.3,102.9 478.7,103.1 481.1,104.5 483.5,102.9 485.9,101.3 488.3,103.1 490.7,107.5 493.1,108.3 495.5,111.5 497.9,115.7 500.3,112.7 502.7,117.9 505.0,122.5 507.4,124.9 509.8,112.9 512.2,120.7 514.6,126.9 517.0,130.2 519.4,136.0 521.8,129.5 524.2,129.3 526.6,130.8 529.0,134.6 531.4,136.2 533.8,128.9 536.2,125.9 538.6,126.5 541.0,128.7 543.3,135.6 545.7,142.2 548.1,138.6 550.5,144.0 552.9,139.4 555.3,130.6 557.7,133.6 560.1,134.8 562.5,134.4 564.9,139.4 567.3,145.6 569.7,149.4 572.1,159.6 574.5,160.6 576.9,159.6 579.2,164.0 581.6,153.2 584.0,158.4 586.4,157.4 588.8,155.6 591.2,154.6 593.6,154.2 596.0,155.0 596.0,164.0" fill="rgba(192,57,43,.08)" stroke="none"/>
+  <polyline points="12.0,56.4 14.4,53.6 16.8,54.8 19.2,53.6 21.6,56.8 24.0,63.5 26.4,67.9 28.8,72.3 31.1,66.7 33.5,69.1 35.9,69.1 38.3,70.7 40.7,76.7 43.1,80.3 45.5,73.5 47.9,73.1 50.3,72.7 52.7,71.5 55.1,64.7 57.5,74.7 59.9,75.1 62.3,77.9 64.7,69.5 67.0,42.4 69.4,41.6 71.8,40.0 74.2,42.0 76.6,42.8 79.0,39.2 81.4,36.8 83.8,36.0 86.2,35.6 88.6,40.8 91.0,42.4 93.4,38.0 95.8,36.8 98.2,40.4 100.6,42.8 103.0,46.8 105.3,52.0 107.7,59.6 110.1,61.1 112.5,62.7 114.9,62.7 117.3,60.0 119.7,58.4 122.1,57.2 124.5,57.2 126.9,34.8 129.3,40.8 131.7,45.2 134.1,46.8 136.5,38.0 138.9,28.8 141.2,31.2 143.6,43.6 146.0,45.6 148.4,44.0 150.8,59.6 153.2,55.6 155.6,58.4 158.0,56.8 160.4,58.4 162.8,48.4 165.2,57.6 167.6,58.4 170.0,60.0 172.4,62.3 174.8,64.7 177.1,61.5 179.5,47.6 181.9,53.2 184.3,60.7 186.7,60.0 189.1,53.2 191.5,42.0 193.9,26.0 196.3,42.8 198.7,36.4 201.1,38.8 203.5,40.0 205.9,46.0 208.3,54.0 210.7,45.6 213.0,47.6 215.4,40.4 217.8,41.6 220.2,42.0 222.6,51.2 225.0,54.0 227.4,66.7 229.8,63.9 232.2,60.4 234.6,61.9 237.0,61.5 239.4,64.7 241.8,52.8 244.2,58.0 246.6,61.9 249.0,58.8 251.3,58.8 253.7,54.4 256.1,56.0 258.5,50.8 260.9,48.8 263.3,53.6 265.7,60.0 268.1,60.0 270.5,57.6 272.9,58.4 275.3,65.1 277.7,68.7 280.1,68.3 282.5,63.9 284.9,61.9 287.2,60.7 289.6,57.6 292.0,64.3 294.4,52.0 296.8,56.4 299.2,48.4 301.6,45.6 304.0,41.6 306.4,59.6 308.8,65.5 311.2,63.9 313.6,63.9 316.0,59.6 318.4,61.5 320.8,62.7 323.1,67.5 325.5,70.3 327.9,60.7 330.3,67.5 332.7,63.1 335.1,52.8 337.5,49.6 339.9,48.0 342.3,49.6 344.7,49.6 347.1,51.2 349.5,63.1 351.9,60.0 354.3,62.7 356.7,63.9 359.0,71.9 361.4,66.7 363.8,63.5 366.2,61.1 368.6,61.5 371.0,67.1 373.4,66.3 375.8,65.1 378.2,64.3 380.6,65.1 383.0,67.1 385.4,51.2 387.8,47.6 390.2,71.9 392.6,108.5 395.0,91.9 397.3,82.3 399.7,95.1 402.1,89.5 404.5,93.1 406.9,95.1 409.3,94.3 411.7,95.9 414.1,91.5 416.5,90.7 418.9,96.7 421.3,96.7 423.7,109.1 426.1,103.9 428.5,100.5 430.9,102.1 433.2,101.5 435.6,108.3 438.0,113.5 440.4,103.7 442.8,115.1 445.2,115.9 447.6,117.3 450.0,111.1 452.4,105.3 454.8,107.5 457.2,105.9 459.6,108.7 462.0,104.3 464.4,98.3 466.8,94.3 469.1,96.7 471.5,101.3 473.9,100.9 476.3,102.9 478.7,103.1 481.1,104.5 483.5,102.9 485.9,101.3 488.3,103.1 490.7,107.5 493.1,108.3 495.5,111.5 497.9,115.7 500.3,112.7 502.7,117.9 505.0,122.5 507.4,124.9 509.8,112.9 512.2,120.7 514.6,126.9 517.0,130.2 519.4,136.0 521.8,129.5 524.2,129.3 526.6,130.8 529.0,134.6 531.4,136.2 533.8,128.9 536.2,125.9 538.6,126.5 541.0,128.7 543.3,135.6 545.7,142.2 548.1,138.6 550.5,144.0 552.9,139.4 555.3,130.6 557.7,133.6 560.1,134.8 562.5,134.4 564.9,139.4 567.3,145.6 569.7,149.4 572.1,159.6 574.5,160.6 576.9,159.6 579.2,164.0 581.6,153.2 584.0,158.4 586.4,157.4 588.8,155.6 591.2,154.6 593.6,154.2 596.0,155.0" fill="none" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="596.0" cy="155.0" r="3.5" fill="#c0392b"/>
+  <text x="603.0" y="159.0" class="lastlbl" fill="#c0392b">35,400</text>
+  <text x="12" y="16" class="axis">최고 67,700</text>
+  <text x="12" y="182" class="axis">최저 33,150</text>
+</svg>
+  <p class="muted">20250707 ~ 20260707 · 일별 종가</p>
+  <div class="metrics"><div class="metric"><div class="mv">245</div><div class="ml">거래일수</div></div><div class="metric"><div class="mv">35400</div><div class="ml">최근종가</div></div><div class="metric"><div class="mv">60100</div><div class="ml">기간시작가</div></div><div class="metric"><div class="mv">-41.1</div><div class="ml">기간등락률(%)</div></div><div class="metric"><div class="mv">67700</div><div class="ml">기간최고가</div></div><div class="metric"><div class="mv">33150</div><div class="ml">기간최저가</div></div><div class="metric"><div class="mv">-47.71</div><div class="ml">최고점대비낙폭(%)</div></div><div class="metric"><div class="mv">48.51</div><div class="ml">연율화변동성(%)</div></div><div class="metric"><div class="mv">2686158</div><div class="ml">평균거래량</div></div><div class="metric"><div class="mv">28.38</div><div class="ml">최근외국인소진율(%)</div></div></div>
+  <p class="comment">최근 365일 기준 기간등락률 -41.1%, 최고점 대비 낙폭 -47.71%, 연율화변동성 48.51%로 시장 평가는 약세와 높은 불확실성을 반영합니다. 다만 주가 지표는 시장 전반 요인의 영향을 받을 수 있어 신용판단의 보조 참고지표로 해석해야 합니다.</p>
+</section>
+<section class="overall">
+  <div class="sec-head"><h2>종합 심사 의견</h2><span class="badge" style="background:#c47f17">보통</span></div>
+  <p>카카오는 2025년 연결 재무 기준 레버리지와 단기 지급능력이 안정권이고 흑자 수익성을 보입니다. 반면 최근 노사 갈등 및 창사 첫 파업 관련 보도가 반복되고, 최근 1년 주가가 큰 폭으로 하락해 평판 및 시장 신뢰 측면의 주의 신호가 있습니다. 공개 데이터 기준으로 즉각적인 고위험 재무 신호는 제한적이나, 여신 검토 시 노사 이슈의 지속 여부와 주가 약세의 원인, 최신 실적 흐름을 함께 확인하는 것이 적절합니다.</p>
+  <p class="disclaimer">※ 본 리포트는 공개 데이터(DART·뉴스·시세) 기반 의사결정 보조 자료이며,
+  최종 여신 판단은 심사역의 검토를 따릅니다.</p>
+</section>
+<footer>IBK AX 실습 · 대출심사 정보 파악 데모</footer>
+</div></body></html>
