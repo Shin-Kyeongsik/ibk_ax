@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBK 내부 데이터 주간 대시보드</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --ibk:#0067ac; --ibk-dark:#004e85; --ibk-light:#e8f2fa;
+    --bg:#f4f6f9; --card:#ffffff; --line:#e3e8ef; --text:#1f2733; --muted:#7b8794;
+    --up:#e5484d; --down:#1e78d2; --ok:#12a150; --warn:#f5a524;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);padding:24px}
+  .wrap{max-width:1180px;margin:0 auto}
+  header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+  header h1{font-size:22px;color:var(--ibk-dark)}
+  header .meta{color:var(--muted);font-size:13px}
+  .badge{background:var(--ibk-light);color:var(--ibk-dark);font-size:12px;padding:3px 9px;border-radius:20px;font-weight:600}
+  .sub{color:var(--muted);font-size:12.5px;margin:6px 0 20px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .kpi .name{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .kpi .val{font-size:21px;font-weight:700;color:var(--ibk-dark)}
+  .kpi .wow{font-size:12.5px;margin-top:6px;font-weight:600}
+  .wow.pos{color:var(--up)} .wow.neg{color:var(--down)} .wow.flat{color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:22px}
+  .card h2{font-size:15px;color:var(--ibk-dark);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{border:1px solid var(--line);background:#fff;color:var(--muted);padding:7px 15px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600}
+  .tab.active{background:var(--ibk);color:#fff;border-color:var(--ibk)}
+  .charts{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+  .chart-box{min-height:260px}
+  .chart-box h3{font-size:13px;color:var(--muted);margin-bottom:10px;font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  th{color:var(--muted);font-weight:600;font-size:12px;background:#fafbfc}
+  tbody tr:hover{background:#f7fafd}
+  .tag{font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700}
+  .tag.up{background:#fdeaeb;color:var(--up)} .tag.down{background:#e7f0fb;color:var(--down)}
+  .tag.struct{background:#fef2e2;color:#c77700}
+  .mono{font-variant-numeric:tabular-nums}
+  .empty{color:var(--muted);font-size:13px;padding:10px 2px}
+  .note{color:var(--muted);font-size:12px;margin-top:10px;line-height:1.6}
+  .footer{color:var(--muted);font-size:12px;text-align:center;margin-top:8px}
+  @media(max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}.charts,.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>IBK 내부 데이터 주간 대시보드</h1>
+    <span class="badge" id="asof">–</span>
+    <span class="meta" id="scope">–</span>
+  </header>
+  <div class="sub">원본 개별 데이터는 분석 계층(Python)에서만 처리되며, 이 화면은 집계 결과(output/*.json)만 표시합니다.</div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card">
+    <h2>📈 지표별 추이 · 집계</h2>
+    <div class="tabs" id="metricTabs"></div>
+    <div class="charts">
+      <div class="chart-box"><h3>12주 총액 추이</h3><canvas id="trendChart"></canvas></div>
+      <div class="chart-box"><h3>지점별 총액 (최신주차)</h3><canvas id="branchChart"></canvas></div>
+    </div>
+    <div class="charts" style="margin-top:20px">
+      <div class="chart-box"><h3>연령대별 총액 (최신주차)</h3><canvas id="ageChart"></canvas></div>
+      <div class="chart-box"><h3>상품구분별 총액 (최신주차)</h3><canvas id="prodChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🚨 특이점 분석</h2>
+    <div class="grid2">
+      <div>
+        <h3 style="font-size:13px;color:var(--muted);margin-bottom:10px">③ 구조적 신호 · ① 통계 이상치</h3>
+        <div id="structTable"></div>
+        <div style="height:16px"></div>
+        <div id="outlierTable"></div>
+      </div>
+      <div>
+        <h3 style="font-size:13px;color:var(--muted);margin-bottom:10px">② 급변(±30%) · ④ 지속 추세</h3>
+        <div id="changeTable"></div>
+        <div style="height:16px"></div>
+        <div id="trendTable"></div>
+      </div>
+    </div>
+    <div class="note" id="anomNote"></div>
+  </div>
+
+  <div class="footer">데이터 출처: output/summary.json · output/anomalies.json (집계 전용) — 원본 raw 데이터 미노출</div>
+</div>
+
+<script>
+const METRICS = ["여신잔액","수신잔액","카드사용금액","보험잔액"];
+const won = n => n.toLocaleString('ko-KR');
+const eok = n => {                     // 원 → 억 단위 표기
+  const v = n/1e8;
+  return (v>=100? v.toFixed(0): v.toFixed(1)) + '억';
+};
+const pct = v => v===null||v===undefined? '–' : (v>0?'+':'') + v + '%';
+let SUMMARY, ANOM, charts = {};
+
+async function boot(){
+  SUMMARY = await (await fetch('output/summary.json')).json();
+  ANOM    = await (await fetch('output/anomalies.json')).json();
+  const info = SUMMARY.기준정보;
+  document.getElementById('asof').textContent = '기준일 ' + info.최신기준일자 + ' (W'+info.최신주차+')';
+  document.getElementById('scope').textContent = '고객 '+won(info.고객수)+'명 · '+info.주차수+'주 스냅샷';
+  renderKPIs();
+  renderTabs();
+  selectMetric('여신잔액');
+  renderAnomalies();
+}
+
+function renderKPIs(){
+  const el = document.getElementById('kpis');
+  el.innerHTML = METRICS.map(m=>{
+    const w = SUMMARY.지표[m].주차별.at(-1);
+    const wow = w.전주대비증감률;
+    const cls = wow>0?'pos':wow<0?'neg':'flat';
+    const arrow = wow>0?'▲':wow<0?'▼':'–';
+    return `<div class="kpi"><div class="name">${m}</div>
+      <div class="val mono">${eok(w.총액)}</div>
+      <div class="wow ${cls}">${arrow} 전주대비 ${pct(wow)}</div></div>`;
+  }).join('');
+}
+
+function renderTabs(){
+  const el = document.getElementById('metricTabs');
+  el.innerHTML = METRICS.map(m=>`<div class="tab" data-m="${m}">${m}</div>`).join('');
+  el.querySelectorAll('.tab').forEach(t=>t.onclick=()=>selectMetric(t.dataset.m));
+}
+
+function selectMetric(m){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.m===m));
+  const d = SUMMARY.지표[m];
+  drawLine('trendChart', d.주차별.map(w=>'W'+w.주차), d.주차별.map(w=>w.총액), m);
+  drawBar('branchChart', d.지점별, '#0067ac');
+  drawBar('ageChart', sortAge(d.연령대별), '#12a150');
+  drawBar('prodChart', d.상품구분별, '#f5a524');
+}
+function sortAge(obj){
+  const o={}; Object.keys(obj).sort().forEach(k=>o[k]=obj[k]); return o;
+}
+function fresh(id){ if(charts[id]) charts[id].destroy(); return document.getElementById(id).getContext('2d'); }
+
+function drawLine(id,labels,data,m){
+  charts[id]=new Chart(fresh(id),{type:'line',data:{labels,datasets:[{label:m+' 총액',data,
+    borderColor:'#0067ac',backgroundColor:'rgba(0,103,172,.10)',fill:true,tension:.3,pointRadius:3}]},
+    options:baseOpts()});
+}
+function drawBar(id,obj,color){
+  const labels=Object.keys(obj), data=labels.map(k=>obj[k].총액);
+  charts[id]=new Chart(fresh(id),{type:'bar',data:{labels,datasets:[{data,backgroundColor:color,borderRadius:5}]},
+    options:baseOpts()});
+}
+function baseOpts(){
+  return {responsive:true,plugins:{legend:{display:false},
+    tooltip:{callbacks:{label:c=>' '+won(c.parsed.y)+'원 ('+eok(c.parsed.y)+')'}}},
+    scales:{y:{ticks:{callback:v=>eok(v)},grid:{color:'#eef1f5'}},x:{grid:{display:false}}}};
+}
+
+/* ---------- 특이점 테이블 ---------- */
+function tableHTML(head, rows){
+  if(!rows.length) return `<div class="empty">해당 신호 없음 — 정상 범위</div>`;
+  return `<table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${rows.join('')}</tbody></table>`;
+}
+function renderAnomalies(){
+  // ③ 구조적 신호
+  const s = ANOM.구조적신호;
+  const srows = s.목록.map(r=>`<tr><td>${r.고객ID}</td><td>${r.지점명}</td>
+    <td><span class="tag up">여신 +${r.여신증감률}%</span></td>
+    <td><span class="tag down">수신 ${r.수신증감률}%</span></td></tr>`);
+  document.getElementById('structTable').innerHTML =
+    `<div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">③ 재무악화 조기신호 (여신↑ & 수신↓ 동시) · ${s.탐지수}건</div>`
+    + tableHTML(['고객ID','지점','여신','수신'], srows);
+
+  // ① 통계 이상치 (지표 통합)
+  let orows=[];
+  METRICS.forEach(m=>{
+    const o=ANOM.지표별[m]?.통계적이상치; if(!o) return;
+    o.목록.forEach(r=>orows.push(`<tr><td>${r.고객ID}</td><td>${m}</td><td>${r.지점명}</td>
+      <td class="mono">${won(r.금액)}</td><td class="mono">${r.zscore}</td></tr>`));
+  });
+  orows=orows.slice(0,10);
+  document.getElementById('outlierTable').innerHTML =
+    `<div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">① 통계적 이상치 (IQR·3σ 초과 초고액)</div>`
+    + tableHTML(['고객ID','지표','지점','금액(원)','z-score'], orows);
+
+  // ② 급변
+  let crows=[];
+  METRICS.forEach(m=>{
+    const c=ANOM.지표별[m]?.급변; if(!c) return;
+    c.급증.forEach(r=>crows.push({m,dir:'up',...r}));
+    c.급감.forEach(r=>crows.push({m,dir:'down',...r}));
+  });
+  crows.sort((a,b)=>Math.abs(b.증감률)-Math.abs(a.증감률));
+  const crHTML=crows.slice(0,10).map(r=>`<tr><td>${r.고객ID}</td><td>${r.m}</td>
+    <td><span class="tag ${r.dir}">${r.증감률>0?'+':''}${r.증감률}%</span></td>
+    <td class="mono">${won(r.직전)}</td><td class="mono">${won(r.현재)}</td></tr>`);
+  document.getElementById('changeTable').innerHTML =
+    `<div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">② 급변 (전주 대비 ±30% 이상)</div>`
+    + tableHTML(['고객ID','지표','증감률','직전','현재'], crHTML);
+
+  // ④ 지속 추세
+  let trows=[];
+  METRICS.forEach(m=>{
+    const t=ANOM.지속추세[m]; if(!t) return;
+    t.지속증가.slice(0,3).forEach(r=>trows.push(`<tr><td>${r.고객ID}</td><td>${m}</td>
+      <td><span class="tag up">▲ 지속증가</span></td><td class="mono">+${r.순증감률}%</td></tr>`));
+    t.지속감소.slice(0,3).forEach(r=>trows.push(`<tr><td>${r.고객ID}</td><td>${m}</td>
+      <td><span class="tag down">▼ 지속감소</span></td><td class="mono">${r.순증감률}%</td></tr>`));
+  });
+  document.getElementById('trendTable').innerHTML =
+    `<div style="font-size:12.5px;color:var(--muted);margin-bottom:6px">④ 지속 추세 (12주 단조 증가/감소)</div>`
+    + tableHTML(['고객ID','지표','방향','순증감률'], trows.slice(0,10));
+
+  document.getElementById('anomNote').textContent =
+    `기준주차 W${ANOM.기준주차} vs 직전주차 W${ANOM.직전주차} 비교. 표는 상위 항목만 표시합니다.`;
+}
+
+boot().catch(e=>{
+  document.querySelector('.wrap').insertAdjacentHTML('beforeend',
+    `<div class="card" style="color:#c00">데이터 로드 실패: ${e}. 로컬 서버로 열어야 합니다 (예: python3 -m http.server).</div>`);
+});
+</script>
+</body>
+</html>
